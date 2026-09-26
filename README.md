@@ -1,12 +1,12 @@
 <div align="center">
 
-# Parlel
+# Verifo
 
 **250+ service emulators on local Docker — Stripe, Postgres, Slack, S3, OpenAI and more, speaking real wire protocols.**
 
 A verification layer for AI coding agents (and a "mock everything locally" tool for everyone else).
 
-[![CI](https://github.com/dksingh1997/parlel/actions/workflows/ci.yml/badge.svg)](https://github.com/dksingh1997/parlel/actions/workflows/ci.yml)
+[![CI](https://github.com/dksingh1997/verifo/actions/workflows/ci.yml/badge.svg)](https://github.com/dksingh1997/verifo/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 ![Services](https://img.shields.io/badge/services-250%2B-green)
 
@@ -32,7 +32,7 @@ you either:
 - **Use the real services** — accurate, but slow, costs money, needs secrets,
   and has side effects (real charges, real emails).
 
-Parlel is the third option: **real wire protocols, in-memory, instant, free.**
+Verifo is the third option: **real wire protocols, in-memory, instant, free.**
 The Postgres emulator speaks the actual Postgres protocol — `psycopg`/`pg`
 connect unmodified. The Stripe emulator speaks the real Stripe REST API —
 `stripe-node` works as-is. Your code is identical to production; only the
@@ -47,12 +47,12 @@ free, with zero risk to production.
 **With the CLI (zero install):**
 
 ```bash
-npx parlel up postgres redis stripe   # start (foreground)
-npx parlel up stripe -d               # or detached
-npx parlel status                     # what's running
-npx parlel ls payments                # browse the catalog by category
-npx parlel reset                      # wipe all state between tests
-npx parlel down                       # stop the detached fleet
+npx verifo up postgres redis stripe   # start (foreground)
+npx verifo up stripe -d               # or detached
+npx verifo status                     # what's running
+npx verifo ls payments                # browse the catalog by category
+npx verifo reset                      # wipe all state between tests
+npx verifo down                       # stop the detached fleet
 ```
 
 See [`docs/cli.md`](./docs/cli.md) for every command.
@@ -60,7 +60,7 @@ See [`docs/cli.md`](./docs/cli.md) for every command.
 **With Docker (collision-safe):**
 
 ```bash
-git clone https://github.com/dksingh1997/parlel && cd parlel
+git clone https://github.com/dksingh1997/verifo && cd verifo
 npm install   # one-time, for the launcher
 
 # start just what you need
@@ -85,8 +85,8 @@ Plain `docker compose up` also works if you'd rather — see
 **With plain `docker run`:**
 
 ```bash
-docker build -t parlel .
-docker run -p 5432:5432 -p 4757:4757 -e SERVICES="postgres,stripe" parlel
+docker build -t verifo .
+docker run -p 5432:5432 -p 4757:4757 -e SERVICES="postgres,stripe" verifo
 ```
 
 **Without Docker (pure Node, no install needed):**
@@ -175,7 +175,7 @@ npm run probe    # boot a set and health-check every service
 
 ## Control plane
 
-Alongside the emulators, Parlel runs an additive admin server on
+Alongside the emulators, Verifo runs an additive admin server on
 `localhost:4600`. Open it **in a browser** for a live dashboard — every running
 service, its connection string, the request log, a state inspector, and reset
 buttons, auto-refreshing every 2 seconds.
@@ -219,12 +219,12 @@ Adding an emulator is a manifest + a `server.js` + a test. See
 
 ## For AI agents
 
-Parlel ships an [MCP](https://modelcontextprotocol.io) server so agents can drive
+Verifo ships an [MCP](https://modelcontextprotocol.io) server so agents can drive
 the emulators by tool call — start services, run code against them, then **read
 the request log to verify what the code actually did**:
 
 ```bash
-npx parlel-mcp
+npx verifo-mcp
 ```
 
 See [AGENTS.md](./AGENTS.md) for the agent workflow and [docs/mcp.md](./docs/mcp.md)
